@@ -17,8 +17,7 @@
  * limitations under the License.
  */
 
-#ifndef _BDROID_BUILDCFG_H
-#define _BDROID_BUILDCFG_H
+#pragma once
 // Disables read remote device feature
 #define MAX_ACL_CONNECTIONS   16
 #define MAX_L2CAP_CHANNELS    32
@@ -28,4 +27,3 @@
 #define BT_CLEAN_TURN_ON_DISABLED 1
 
 #define AVDT_NUM_SEPS 35
-#endif
