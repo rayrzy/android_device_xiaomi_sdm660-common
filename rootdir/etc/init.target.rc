@@ -391,7 +391,6 @@ service vendor.imsrcsservice /system/vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
-
 service ppd /system/vendor/bin/mm-pp-dpps
     class late_start
     user system
@@ -453,5 +452,3 @@ service vendor.hvdcp_opti /system/vendor/bin/hvdcp_opti
      class main
      user root
      group system wakelock
-
-

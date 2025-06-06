@@ -376,7 +376,6 @@ esac
 #property if any target is setting forcefully.
 set_density_by_fb
 
-
 # set Lilliput LCD density for ADP
 product=`getprop ro.build.product`
 
