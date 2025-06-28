@@ -17,14 +17,14 @@
 #ifndef POWER_LIBPERFMGR_POWER_H_
 #define POWER_LIBPERFMGR_POWER_H_
 
-#include <atomic>
-#include <memory>
-#include <thread>
-
 #include <android/hardware/power/1.3/IPower.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <perfmgr/HintManager.h>
+
+#include <atomic>
+#include <memory>
+#include <thread>
 
 #include "InteractionHandler.h"
 
@@ -45,34 +45,34 @@ using PowerHint_1_3 = ::android::hardware::power::V1_3::PowerHint;
 using ::android::perfmgr::HintManager;
 
 class Power : public IPower {
-  public:
-    // Methods from ::android::hardware::power::V1_0::IPower follow.
+ public:
+  // Methods from ::android::hardware::power::V1_0::IPower follow.
 
-    Power();
+  Power();
 
-    Return<void> setInteractive(bool /* interactive */) override;
-    Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
-    Return<void> setFeature(Feature feature, bool activate) override;
-    Return<void> getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) override;
+  Return<void> setInteractive(bool /* interactive */) override;
+  Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
+  Return<void> setFeature(Feature feature, bool activate) override;
+  Return<void> getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) override;
 
-    // Methods from ::android::hardware::power::V1_1::IPower follow.
-    Return<void> getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) override;
-    Return<void> powerHintAsync(PowerHint_1_0 hint, int32_t data) override;
+  // Methods from ::android::hardware::power::V1_1::IPower follow.
+  Return<void> getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) override;
+  Return<void> powerHintAsync(PowerHint_1_0 hint, int32_t data) override;
 
-    // Methods from ::android::hardware::power::V1_2::IPower follow.
-    Return<void> powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) override;
+  // Methods from ::android::hardware::power::V1_2::IPower follow.
+  Return<void> powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) override;
 
-    // Methods from ::android::hardware::power::V1_3::IPower follow.
-    Return<void> powerHintAsync_1_3(PowerHint_1_3 hint, int32_t data) override;
+  // Methods from ::android::hardware::power::V1_3::IPower follow.
+  Return<void> powerHintAsync_1_3(PowerHint_1_3 hint, int32_t data) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
+  // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-  private:
-    std::shared_ptr<HintManager> mHintManager;
-    std::unique_ptr<InteractionHandler> mInteractionHandler;
-    std::atomic<bool> mSustainedPerfModeOn;
-    std::atomic<bool> mReady;
-    std::thread mInitThread;
+ private:
+  std::shared_ptr<HintManager> mHintManager;
+  std::unique_ptr<InteractionHandler> mInteractionHandler;
+  std::atomic<bool> mSustainedPerfModeOn;
+  std::atomic<bool> mReady;
+  std::thread mInitThread;
 };
 
 }  // namespace implementation

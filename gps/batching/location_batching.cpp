@@ -53,82 +53,71 @@ static const BatchingInterface gBatchingInterface = {
     startBatching,
     stopBatching,
     updateBatchingOptions,
-    getBatchedLocations
-};
+    getBatchedLocations};
 
 #ifndef DEBUG_X86
 extern "C" const BatchingInterface* getBatchingInterface()
 #else
 const BatchingInterface* getBatchingInterface()
-#endif // DEBUG_X86
+#endif  // DEBUG_X86
 {
-   return &gBatchingInterface;
+  return &gBatchingInterface;
 }
 
-static void initialize()
-{
-    if (NULL == gBatchingAdapter) {
-        gBatchingAdapter = new BatchingAdapter();
-    }
+static void initialize() {
+  if (NULL == gBatchingAdapter) {
+    gBatchingAdapter = new BatchingAdapter();
+  }
 }
 
-static void deinitialize()
-{
-    if (NULL != gBatchingAdapter) {
-        delete gBatchingAdapter;
-        gBatchingAdapter = NULL;
-    }
+static void deinitialize() {
+  if (NULL != gBatchingAdapter) {
+    delete gBatchingAdapter;
+    gBatchingAdapter = NULL;
+  }
 }
 
-static void addClient(LocationAPI* client, const LocationCallbacks& callbacks)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->addClientCommand(client, callbacks);
-    }
+static void addClient(LocationAPI* client, const LocationCallbacks& callbacks) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->addClientCommand(client, callbacks);
+  }
 }
 
-static void removeClient(LocationAPI* client, removeClientCompleteCallback rmClientCb)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->removeClientCommand(client, rmClientCb);
-    }
+static void removeClient(LocationAPI* client, removeClientCompleteCallback rmClientCb) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->removeClientCommand(client, rmClientCb);
+  }
 }
 
-static void requestCapabilities(LocationAPI* client)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->requestCapabilitiesCommand(client);
-    }
+static void requestCapabilities(LocationAPI* client) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->requestCapabilitiesCommand(client);
+  }
 }
 
-static uint32_t startBatching(LocationAPI* client, BatchingOptions &batchOptions)
-{
-    if (NULL != gBatchingAdapter) {
-        return gBatchingAdapter->startBatchingCommand(client, batchOptions);
-    } else {
-        return 0;
-    }
+static uint32_t startBatching(LocationAPI* client, BatchingOptions& batchOptions) {
+  if (NULL != gBatchingAdapter) {
+    return gBatchingAdapter->startBatchingCommand(client, batchOptions);
+  } else {
+    return 0;
+  }
 }
 
-static void stopBatching(LocationAPI* client, uint32_t id)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->stopBatchingCommand(client, id);
-    }
+static void stopBatching(LocationAPI* client, uint32_t id) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->stopBatchingCommand(client, id);
+  }
 }
 
 static void updateBatchingOptions(
-        LocationAPI* client, uint32_t id, BatchingOptions& batchOptions)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->updateBatchingOptionsCommand(client, id, batchOptions);
-    }
+    LocationAPI* client, uint32_t id, BatchingOptions& batchOptions) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->updateBatchingOptionsCommand(client, id, batchOptions);
+  }
 }
 
-static void getBatchedLocations(LocationAPI* client, uint32_t id, size_t count)
-{
-    if (NULL != gBatchingAdapter) {
-        gBatchingAdapter->getBatchedLocationsCommand(client, id, count);
-    }
+static void getBatchedLocations(LocationAPI* client, uint32_t id, size_t count) {
+  if (NULL != gBatchingAdapter) {
+    gBatchingAdapter->getBatchedLocationsCommand(client, id, count);
+  }
 }
-

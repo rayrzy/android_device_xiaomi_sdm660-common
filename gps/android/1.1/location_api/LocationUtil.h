@@ -30,9 +30,9 @@
 #ifndef LOCATION_UTIL_H
 #define LOCATION_UTIL_H
 
-#include <android/hardware/gnss/1.0/types.h>
-#include <LocationAPI.h>
 #include <GnssDebug.h>
+#include <LocationAPI.h>
+#include <android/hardware/gnss/1.0/types.h>
 
 namespace android {
 namespace hardware {
@@ -52,4 +52,4 @@ void convertGnssEphemerisHealth(GnssEphemerisHealth& in, GnssDebug::SatelliteEph
 }  // namespace gnss
 }  // namespace hardware
 }  // namespace android
-#endif // LOCATION_UTIL_H
+#endif  // LOCATION_UTIL_H

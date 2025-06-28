@@ -38,26 +38,26 @@
 extern "C" {
 #endif
 
-#include <cutils/properties.h>
-#include <cutils/threads.h>
-#include <cutils/sched_policy.h>
 #include <cutils/android_filesystem_config.h>
-#include <string.h>
+#include <cutils/properties.h>
+#include <cutils/sched_policy.h>
+#include <cutils/threads.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define UID_GPS (AID_GPS)
 #define GID_GPS (AID_GPS)
 #define UID_LOCCLIENT (4021)
 #define GID_LOCCLIENT (4021)
 
-#define LOC_PATH_GPS_CONF_STR      "/vendor/etc/gps.conf"
-#define LOC_PATH_IZAT_CONF_STR     "/vendor/etc/izat.conf"
-#define LOC_PATH_FLP_CONF_STR      "/vendor/etc/flp.conf"
-#define LOC_PATH_LOWI_CONF_STR     "/vendor/etc/lowi.conf"
-#define LOC_PATH_SAP_CONF_STR      "/vendor/etc/sap.conf"
-#define LOC_PATH_APDR_CONF_STR     "/vendor/etc/apdr.conf"
-#define LOC_PATH_XTWIFI_CONF_STR   "/vendor/etc/xtwifi.conf"
-#define LOC_PATH_QUIPC_CONF_STR    "/vendor/etc/quipc.conf"
+#define LOC_PATH_GPS_CONF_STR "/vendor/etc/gps.conf"
+#define LOC_PATH_IZAT_CONF_STR "/vendor/etc/izat.conf"
+#define LOC_PATH_FLP_CONF_STR "/vendor/etc/flp.conf"
+#define LOC_PATH_LOWI_CONF_STR "/vendor/etc/lowi.conf"
+#define LOC_PATH_SAP_CONF_STR "/vendor/etc/sap.conf"
+#define LOC_PATH_APDR_CONF_STR "/vendor/etc/apdr.conf"
+#define LOC_PATH_XTWIFI_CONF_STR "/vendor/etc/xtwifi.conf"
+#define LOC_PATH_QUIPC_CONF_STR "/vendor/etc/quipc.conf"
 
 #ifdef __cplusplus
 }

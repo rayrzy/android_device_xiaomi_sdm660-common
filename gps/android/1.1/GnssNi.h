@@ -30,40 +30,40 @@ namespace gnss {
 namespace V1_1 {
 namespace implementation {
 
-using ::android::hardware::gnss::V1_0::IGnssNi;
-using ::android::hardware::gnss::V1_0::IGnssNiCallback;
+using ::android::sp;
+using ::android::hardware::hidl_string;
+using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-using ::android::hardware::hidl_vec;
-using ::android::hardware::hidl_string;
-using ::android::sp;
+using ::android::hardware::gnss::V1_0::IGnssNi;
+using ::android::hardware::gnss::V1_0::IGnssNiCallback;
 
 struct Gnss;
 struct GnssNi : public IGnssNi {
-    GnssNi(Gnss* gnss);
-    ~GnssNi() = default;
+  GnssNi(Gnss* gnss);
+  ~GnssNi() = default;
 
-    /*
-     * Methods from ::android::hardware::gnss::V1_0::IGnssNi follow.
-     * These declarations were generated from IGnssNi.hal.
-     */
-    Return<void> setCallback(const sp<IGnssNiCallback>& callback) override;
-    Return<void> respond(int32_t notifId,
-                         IGnssNiCallback::GnssUserResponseType userResponse) override;
-
- private:
-    struct GnssNiDeathRecipient : hidl_death_recipient {
-        GnssNiDeathRecipient(sp<GnssNi> gnssNi) : mGnssNi(gnssNi) {
-        }
-        ~GnssNiDeathRecipient() = default;
-        virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssNi> mGnssNi;
-    };
+  /*
+   * Methods from ::android::hardware::gnss::V1_0::IGnssNi follow.
+   * These declarations were generated from IGnssNi.hal.
+   */
+  Return<void> setCallback(const sp<IGnssNiCallback>& callback) override;
+  Return<void> respond(int32_t notifId,
+                       IGnssNiCallback::GnssUserResponseType userResponse) override;
 
  private:
-    sp<GnssNiDeathRecipient> mGnssNiDeathRecipient = nullptr;
-    sp<IGnssNiCallback> mGnssNiCbIface = nullptr;
-    Gnss* mGnss = nullptr;
+  struct GnssNiDeathRecipient : hidl_death_recipient {
+    GnssNiDeathRecipient(sp<GnssNi> gnssNi) : mGnssNi(gnssNi) {
+    }
+    ~GnssNiDeathRecipient() = default;
+    virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
+    sp<GnssNi> mGnssNi;
+  };
+
+ private:
+  sp<GnssNiDeathRecipient> mGnssNiDeathRecipient = nullptr;
+  sp<IGnssNiCallback> mGnssNiCbIface = nullptr;
+  Gnss* mGnss = nullptr;
 };
 
 }  // namespace implementation

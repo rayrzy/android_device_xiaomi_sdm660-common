@@ -32,20 +32,20 @@ using android::sp;
 using android::status_t;
 
 int main() {
-    sp<ILight> service = new Light();
+  sp<ILight> service = new Light();
 
-    configureRpcThreadpool(1, true);
+  configureRpcThreadpool(1, true);
 
-    status_t status = service->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Cannot register Light HAL service.";
-        return 1;
-    }
-
-    LOG(DEBUG) << "Light HAL service ready.";
-
-    joinRpcThreadpool();
-
-    LOG(ERROR) << "Light HAL service failed to join thread pool.";
+  status_t status = service->registerAsService();
+  if (status != OK) {
+    LOG(ERROR) << "Cannot register Light HAL service.";
     return 1;
+  }
+
+  LOG(DEBUG) << "Light HAL service ready.";
+
+  joinRpcThreadpool();
+
+  LOG(ERROR) << "Light HAL service failed to join thread pool.";
+  return 1;
 }

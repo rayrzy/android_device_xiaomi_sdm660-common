@@ -35,16 +35,16 @@ extern "C" {
 #endif
 
 enum stats_type {
-    //Platform Stats
-    RPM_MODE_XO = 0,
-    RPM_MODE_VMIN,
-    RPM_MODE_MAX,
-    XO_VOTERS_START = RPM_MODE_MAX,
-    VOTER_APSS = XO_VOTERS_START,
-    VOTER_MPSS,
-    VOTER_ADSP,
-    VOTER_SLPI,
-    MAX_PLATFORM_STATS,
+  // Platform Stats
+  RPM_MODE_XO = 0,
+  RPM_MODE_VMIN,
+  RPM_MODE_MAX,
+  XO_VOTERS_START = RPM_MODE_MAX,
+  VOTER_APSS = XO_VOTERS_START,
+  VOTER_MPSS,
+  VOTER_ADSP,
+  VOTER_SLPI,
+  MAX_PLATFORM_STATS,
 };
 
 #define PLATFORM_SLEEP_MODES_COUNT RPM_MODE_MAX
@@ -54,10 +54,10 @@ enum stats_type {
 #define VMIN_VOTERS 0
 
 struct stat_pair {
-    enum stats_type stat;
-    const char *label;
-    const char **parameters;
-    size_t num_parameters;
+  enum stats_type stat;
+  const char *label;
+  const char **parameters;
+  size_t num_parameters;
 };
 
 int extract_platform_stats(uint64_t *list);
@@ -66,4 +66,4 @@ int extract_platform_stats(uint64_t *list);
 }
 #endif
 
-#endif //__POWER_HELPER_H__
+#endif  //__POWER_HELPER_H__

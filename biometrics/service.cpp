@@ -30,22 +30,22 @@ using android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint;
 using android::hardware::biometrics::fingerprint::V2_1::implementation::BiometricsFingerprint;
 
 int main() {
-    android::sp<IBiometricsFingerprint> service = BiometricsFingerprint::getInstance();
+  android::sp<IBiometricsFingerprint> service = BiometricsFingerprint::getInstance();
 
-    if (service == nullptr) {
-        ALOGE("Instance of BiometricsFingerprint is null");
-        return 1;
-    }
+  if (service == nullptr) {
+    ALOGE("Instance of BiometricsFingerprint is null");
+    return 1;
+  }
 
-    configureRpcThreadpool(1, true /*callerWillJoin*/);
+  configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    android::status_t status = service->registerAsService();
-    if (status != android::OK) {
-        ALOGE("Cannot register BiometricsFingerprint service");
-        return 1;
-    }
+  android::status_t status = service->registerAsService();
+  if (status != android::OK) {
+    ALOGE("Cannot register BiometricsFingerprint service");
+    return 1;
+  }
 
-    joinRpcThreadpool();
+  joinRpcThreadpool();
 
-    return 0; // should never get here
+  return 0;  // should never get here
 }

@@ -34,8 +34,7 @@
 #include <gps_extended.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 const char* loc_get_gps_status_name(LocGpsStatusValue gps_status);

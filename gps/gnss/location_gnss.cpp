@@ -58,7 +58,7 @@ static void gnssGetSvTypeConfig(GnssSvTypeConfigCallback& callback);
 static void gnssResetSvTypeConfig();
 
 static void injectLocation(double latitude, double longitude, float accuracy);
-static void injectLocationExt(const GnssLocationInfoNotification &locationInfo);
+static void injectLocationExt(const GnssLocationInfoNotification& locationInfo);
 static void injectTime(int64_t time, int64_t timeReference, int32_t uncertainty);
 
 static void agpsInit(const AgpsCbInfo& cbInfo);
@@ -117,276 +117,245 @@ static const GnssInterface gGnssInterface = {
     nfwInit,
     getPowerStateChanges,
     injectLocationExt,
-    updateBatteryStatus
-};
+    updateBatteryStatus};
 
 #ifndef DEBUG_X86
 extern "C" const GnssInterface* getGnssInterface()
 #else
 const GnssInterface* getGnssInterface()
-#endif // DEBUG_X86
+#endif  // DEBUG_X86
 {
-   return &gGnssInterface;
+  return &gGnssInterface;
 }
 
-static void initialize()
-{
-    if (NULL == gGnssAdapter) {
-        gGnssAdapter = new GnssAdapter();
-    }
+static void initialize() {
+  if (NULL == gGnssAdapter) {
+    gGnssAdapter = new GnssAdapter();
+  }
 }
 
-static void deinitialize()
-{
-    if (NULL != gGnssAdapter) {
-        delete gGnssAdapter;
-        gGnssAdapter = NULL;
-    }
+static void deinitialize() {
+  if (NULL != gGnssAdapter) {
+    delete gGnssAdapter;
+    gGnssAdapter = NULL;
+  }
 }
 
-static void addClient(LocationAPI* client, const LocationCallbacks& callbacks)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->addClientCommand(client, callbacks);
-    }
+static void addClient(LocationAPI* client, const LocationCallbacks& callbacks) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->addClientCommand(client, callbacks);
+  }
 }
 
-static void removeClient(LocationAPI* client, removeClientCompleteCallback rmClientCb)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->removeClientCommand(client, rmClientCb);
-    }
+static void removeClient(LocationAPI* client, removeClientCompleteCallback rmClientCb) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->removeClientCommand(client, rmClientCb);
+  }
 }
 
-static void requestCapabilities(LocationAPI* client)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->requestCapabilitiesCommand(client);
-    }
+static void requestCapabilities(LocationAPI* client) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->requestCapabilitiesCommand(client);
+  }
 }
 
 static uint32_t startTracking(
-        LocationAPI* client, TrackingOptions& trackingOptions)
-{
-    if (NULL != gGnssAdapter) {
-        return gGnssAdapter->startTrackingCommand(client, trackingOptions);
-    } else {
-        return 0;
-    }
+    LocationAPI* client, TrackingOptions& trackingOptions) {
+  if (NULL != gGnssAdapter) {
+    return gGnssAdapter->startTrackingCommand(client, trackingOptions);
+  } else {
+    return 0;
+  }
 }
 
 static void updateTrackingOptions(
-        LocationAPI* client, uint32_t id, TrackingOptions& trackingOptions)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->updateTrackingOptionsCommand(
-                client, id, trackingOptions);
-    }
+    LocationAPI* client, uint32_t id, TrackingOptions& trackingOptions) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->updateTrackingOptionsCommand(
+        client, id, trackingOptions);
+  }
 }
 
-static void stopTracking(LocationAPI* client, uint32_t id)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->stopTrackingCommand(client, id);
-    }
+static void stopTracking(LocationAPI* client, uint32_t id) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->stopTrackingCommand(client, id);
+  }
 }
 
-static void gnssNiResponse(LocationAPI* client, uint32_t id, GnssNiResponse response)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->gnssNiResponseCommand(client, id, response);
-    }
+static void gnssNiResponse(LocationAPI* client, uint32_t id, GnssNiResponse response) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->gnssNiResponseCommand(client, id, response);
+  }
 }
 
-static void setControlCallbacks(LocationControlCallbacks& controlCallbacks)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->setControlCallbacksCommand(controlCallbacks);
-    }
+static void setControlCallbacks(LocationControlCallbacks& controlCallbacks) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->setControlCallbacksCommand(controlCallbacks);
+  }
 }
 
-static uint32_t enable(LocationTechnologyType techType)
-{
-    if (NULL != gGnssAdapter) {
-        return gGnssAdapter->enableCommand(techType);
-    } else {
-        return 0;
-    }
+static uint32_t enable(LocationTechnologyType techType) {
+  if (NULL != gGnssAdapter) {
+    return gGnssAdapter->enableCommand(techType);
+  } else {
+    return 0;
+  }
 }
 
-static void disable(uint32_t id)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->disableCommand(id);
-    }
+static void disable(uint32_t id) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->disableCommand(id);
+  }
 }
 
-static uint32_t* gnssUpdateConfig(GnssConfig config)
-{
-    if (NULL != gGnssAdapter) {
-        return gGnssAdapter->gnssUpdateConfigCommand(config);
-    } else {
-        return NULL;
-    }
+static uint32_t* gnssUpdateConfig(GnssConfig config) {
+  if (NULL != gGnssAdapter) {
+    return gGnssAdapter->gnssUpdateConfigCommand(config);
+  } else {
+    return NULL;
+  }
 }
 
-static uint32_t* gnssGetConfig(GnssConfigFlagsMask mask)
-{
-    if (NULL != gGnssAdapter) {
-        return gGnssAdapter->gnssGetConfigCommand(mask);
-    } else {
-        return NULL;
-    }
+static uint32_t* gnssGetConfig(GnssConfigFlagsMask mask) {
+  if (NULL != gGnssAdapter) {
+    return gGnssAdapter->gnssGetConfigCommand(mask);
+  } else {
+    return NULL;
+  }
 }
 
-static void gnssUpdateSvTypeConfig(GnssSvTypeConfig& config)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->gnssUpdateSvTypeConfigCommand(config);
-    }
+static void gnssUpdateSvTypeConfig(GnssSvTypeConfig& config) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->gnssUpdateSvTypeConfigCommand(config);
+  }
 }
 
-static void gnssGetSvTypeConfig(GnssSvTypeConfigCallback& callback)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->gnssGetSvTypeConfigCommand(callback);
-    }
+static void gnssGetSvTypeConfig(GnssSvTypeConfigCallback& callback) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->gnssGetSvTypeConfigCommand(callback);
+  }
 }
 
-static void gnssResetSvTypeConfig()
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->gnssResetSvTypeConfigCommand();
-    }
+static void gnssResetSvTypeConfig() {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->gnssResetSvTypeConfigCommand();
+  }
 }
 
-static uint32_t gnssDeleteAidingData(GnssAidingData& data)
-{
-    if (NULL != gGnssAdapter) {
-        return gGnssAdapter->gnssDeleteAidingDataCommand(data);
-    } else {
-        return 0;
-    }
+static uint32_t gnssDeleteAidingData(GnssAidingData& data) {
+  if (NULL != gGnssAdapter) {
+    return gGnssAdapter->gnssDeleteAidingDataCommand(data);
+  } else {
+    return 0;
+  }
 }
 
-static void gnssUpdateXtraThrottle(const bool enabled)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->gnssUpdateXtraThrottleCommand(enabled);
-    }
+static void gnssUpdateXtraThrottle(const bool enabled) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->gnssUpdateXtraThrottleCommand(enabled);
+  }
 }
 
-static void injectLocation(double latitude, double longitude, float accuracy)
-{
-   if (NULL != gGnssAdapter) {
-       gGnssAdapter->injectLocationCommand(latitude, longitude, accuracy);
-   }
+static void injectLocation(double latitude, double longitude, float accuracy) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->injectLocationCommand(latitude, longitude, accuracy);
+  }
 }
 
-static void injectTime(int64_t time, int64_t timeReference, int32_t uncertainty)
-{
-   if (NULL != gGnssAdapter) {
-       gGnssAdapter->injectTimeCommand(time, timeReference, uncertainty);
-   }
+static void injectTime(int64_t time, int64_t timeReference, int32_t uncertainty) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->injectTimeCommand(time, timeReference, uncertainty);
+  }
 }
 
 static void agpsInit(const AgpsCbInfo& cbInfo) {
-
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->initAgpsCommand(cbInfo);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->initAgpsCommand(cbInfo);
+  }
 }
 static void agpsDataConnOpen(
-        AGpsExtType agpsType, const char* apnName, int apnLen, int ipType) {
-
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->dataConnOpenCommand(
-                agpsType, apnName, apnLen, (AGpsBearerType)ipType);
-    }
+    AGpsExtType agpsType, const char* apnName, int apnLen, int ipType) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->dataConnOpenCommand(
+        agpsType, apnName, apnLen, (AGpsBearerType)ipType);
+  }
 }
 static void agpsDataConnClosed(AGpsExtType agpsType) {
-
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->dataConnClosedCommand(agpsType);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->dataConnClosedCommand(agpsType);
+  }
 }
 static void agpsDataConnFailed(AGpsExtType agpsType) {
-
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->dataConnFailedCommand(agpsType);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->dataConnFailedCommand(agpsType);
+  }
 }
 
 static void getDebugReport(GnssDebugReport& report) {
-
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->getDebugReport(report);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->getDebugReport(report);
+  }
 }
 
 static void updateConnectionStatus(bool connected, int8_t type,
                                    bool roaming, NetworkHandle networkHandle) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->getSystemStatus()->eventConnectionStatus(
-                connected, type, roaming, networkHandle);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->getSystemStatus()->eventConnectionStatus(
+        connected, type, roaming, networkHandle);
+  }
 }
 
-static void odcpiInit(const OdcpiRequestCallback& callback)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->initOdcpiCommand(callback);
-    }
+static void odcpiInit(const OdcpiRequestCallback& callback) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->initOdcpiCommand(callback);
+  }
 }
 
-static void odcpiInject(const Location& location)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->injectOdcpiCommand(location);
-    }
+static void odcpiInject(const Location& location) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->injectOdcpiCommand(location);
+  }
 }
 
 static void blockCPI(double latitude, double longitude, float accuracy,
                      int blockDurationMsec, double latLonDiffThreshold) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->blockCPICommand(latitude, longitude, accuracy,
-                                      blockDurationMsec, latLonDiffThreshold);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->blockCPICommand(latitude, longitude, accuracy,
+                                  blockDurationMsec, latLonDiffThreshold);
+  }
 }
 
 static void getGnssEnergyConsumed(GnssEnergyConsumedCallback energyConsumedCb) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->getGnssEnergyConsumedCommand(energyConsumedCb);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->getGnssEnergyConsumedCommand(energyConsumedCb);
+  }
 }
 
 static void enableNfwLocationAccess(bool enable) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->nfwControlCommand(enable);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->nfwControlCommand(enable);
+  }
 }
 
 static void nfwInit(const NfwCbInfo& cbInfo) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->initNfwCommand(cbInfo);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->initNfwCommand(cbInfo);
+  }
 }
-static void getPowerStateChanges(void* powerStateCb)
-{
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->getPowerStateChangesCommand(powerStateCb);
-    }
+static void getPowerStateChanges(void* powerStateCb) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->getPowerStateChangesCommand(powerStateCb);
+  }
 }
 
-static void injectLocationExt(const GnssLocationInfoNotification &locationInfo)
-{
-   if (NULL != gGnssAdapter) {
-       gGnssAdapter->injectLocationExtCommand(locationInfo);
-   }
+static void injectLocationExt(const GnssLocationInfoNotification& locationInfo) {
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->injectLocationExtCommand(locationInfo);
+  }
 }
 
 static void updateBatteryStatus(bool charging) {
-    if (NULL != gGnssAdapter) {
-        gGnssAdapter->getSystemStatus()->updatePowerConnectState(charging);
-    }
+  if (NULL != gGnssAdapter) {
+    gGnssAdapter->getSystemStatus()->updatePowerConnectState(charging);
+  }
 }
